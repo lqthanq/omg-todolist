@@ -5,12 +5,26 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('./database');
+const cors = require("cors");
 
 var indexRouter = require('./routes/index');
 var tasksRouter = require('./routes/tasks');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+app.use(
+  cors({
+     origin: [
+        "http://localhost:3000",
+        "https://omg-todolist.onrender.com"
+     ],
+     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+     allowedHeaders: ["Content-Type", "Authorization"],
+     preflightContinue: false,
+     optionsSuccessStatus: 200,
+  })
+);
 
 app.use(logger('dev'));
 app.use(express.json());
